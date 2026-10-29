@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat Socket</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+<main class="entry">
+  <form class="entry-card" id="entry-form" autocomplete="off">
+    <div>
+      <h1>Chat Socket</h1>
+      <p class="lead">Scegli un nome per farti riconoscere dagli altri.</p>
+    </div>
+    <label>Nome utente
+      <input type="text" id="nick" maxlength="20" placeholder="es. Marco" required autofocus>
+    </label>
+    <button type="submit" id="enter-btn">Entra</button>
+    <p class="error" id="entry-error" role="alert"></p>
+  </form>
+</main>
+
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

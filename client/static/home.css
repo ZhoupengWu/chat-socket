@@ -1,0 +1,64 @@
+/* ---------- home ---------- */
+#home { justify-content: center; max-width: 520px; width: 100%; margin: 0 auto; }
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.choice { display: grid; gap: 4px; text-align: left; padding: 18px 16px; background: var(--paper); color: var(--ink); border: 1px solid var(--line); font-weight: 400; }
+.choice strong { font-size: 1.05rem; }
+.choice span { color: var(--muted); font-size: 0.88rem; }
+.choice:hover:not(:disabled) { border-color: var(--me); }
+
+/* ---------- barra superiore delle schermate ---------- */
+.bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.bar .grow { flex: 1; min-width: 0; }
+.bar small { display: block; color: var(--muted); font-size: 0.85rem; }
+.bar button { padding: 8px 14px; }
+
+/* ---------- lista chat ---------- */
+#chat-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; overflow-y: auto; }
+.chat-item { width: 100%; text-align: left; display: grid; gap: 2px; padding: 12px 14px; background: var(--paper); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; font-weight: 400; }
+.chat-item .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.chat-item .name { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chat-item .meta { font-size: 0.88rem; color: var(--muted); }
+.chat-item.public { box-shadow: inset 3px 0 0 var(--pub); }
+.chat-item.private { box-shadow: inset 3px 0 0 var(--priv); }
+.chat-item.locked { cursor: default; opacity: 0.8; }
+.chat-item:not(.locked):hover { border-color: var(--me); }
+.tag { font-size: 0.78rem; font-weight: 500; padding: 1px 8px; border-radius: 99px; border: 1px solid currentColor; flex: none; }
+.tag.public { color: var(--pub); }
+.tag.private { color: var(--priv); }
+.list-empty { color: var(--muted); }
+
+/* ---------- chat ---------- */
+#chat-view { padding: 0; gap: 0; }
+#chat-view .bar { padding: 16px 28px; border-bottom: 1px solid var(--line); }
+.switch { flex-direction: row; align-items: center; gap: 10px; cursor: pointer; font-weight: 500; }
+.switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.track { width: 44px; height: 24px; border-radius: 99px; background: var(--priv); position: relative; transition: background 0.15s; flex: none; }
+.track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform 0.15s; }
+.switch input:checked + .track { background: var(--pub); }
+.switch input:checked + .track::after { transform: translateX(20px); }
+.switch input:focus-visible + .track { outline: 3px solid var(--me); outline-offset: 2px; }
+
+#log { flex: 1; list-style: none; margin: 0; padding: 22px 28px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.msg { max-width: min(70ch, 82%); padding: 9px 14px; border-radius: 14px; background: var(--other); border: 1px solid var(--line); overflow-wrap: anywhere; }
+.msg .who { display: block; font-size: 0.8rem; font-weight: 700; color: var(--muted); margin-bottom: 1px; }
+.msg time { font-size: 0.75rem; margin-left: 8px; font-weight: 400; }
+.msg.me { align-self: flex-end; background: var(--me); border-color: var(--me); color: var(--me-ink); border-bottom-right-radius: 4px; }
+.msg.me .who, .msg.me time { color: rgba(255,255,255,0.78); }
+.msg.other { border-bottom-left-radius: 4px; }
+.msg.sys { align-self: center; background: transparent; border: 0; color: var(--muted); font-size: 0.88rem; text-align: center; }
+.empty { margin: auto; color: var(--muted); text-align: center; max-width: 36ch; }
+
+.composer { flex-direction: row; gap: 10px; padding: 14px 28px 20px; border-top: 1px solid var(--line); }
+.composer input { flex: 1; min-width: 0; }
+.composer button { background: var(--me); color: var(--me-ink); }
+
+@media (max-width: 600px) {
+  .view { padding: 24px 18px; }
+  #chat-view .bar, #log, .composer { padding-left: 18px; padding-right: 18px; }
+  .choices { grid-template-columns: 1fr; }
+  .msg { max-width: 92%; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .msg { animation: pop 0.18s ease-out; }
+  @keyframes pop { from { transform: translateY(4px); opacity: 0; } to { transform: none; opacity: 1; } }
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat Socket - Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+<div class="app">
+
+  <!-- HOME: scelta tra creare una chat o vedere quelle disponibili -->
+  <section class="view" id="home">
+    <div>
+      <h1>Chat Socket</h1>
+      <p class="lead" id="hello"></p>
+    </div>
+    <div class="choices">
+      <button type="button" class="choice" id="btn-create">
+        <strong>Crea chat</strong>
+        <span>Scegli il nome e inizia a scrivere.</span>
+      </button>
+      <button type="button" class="choice" id="btn-list">
+        <strong>Chat disponibili</strong>
+        <span>Guarda le chat attive ed entra.</span>
+      </button>
+    </div>
+    <button type="button" class="ghost" id="logout-btn">Cambia nome utente</button>
+  </section>
+
+  <!-- CREA CHAT -->
+  <section class="view" id="create-view" hidden>
+    <div class="bar">
+      <button type="button" class="ghost" data-back>Indietro</button>
+      <h2 class="grow">Crea chat</h2>
+    </div>
+    <form id="create-form" autocomplete="off">
+      <label>Nome della chat
+        <input type="text" id="chat-name" maxlength="30" placeholder="es. Classe 5A" required>
+      </label>
+      <button type="submit">Crea e entra</button>
+    </form>
+    <p class="error" id="create-error" role="alert"></p>
+  </section>
+
+  <!-- LISTA CHAT -->
+  <section class="view" id="list-view" hidden>
+    <div class="bar">
+      <button type="button" class="ghost" data-back>Indietro</button>
+      <h2 class="grow">Chat disponibili</h2>
+      <button type="button" class="ghost" id="refresh-btn">Aggiorna</button>
+    </div>
+    <p class="list-empty" id="list-empty" hidden>Nessuna chat al momento. Creane una dalla home.</p>
+    <ul id="chat-list"></ul>
+    <p class="error" id="list-error" role="alert"></p>
+  </section>
+
+  <!-- CHAT -->
+  <section class="view" id="chat-view" hidden>
+    <div class="bar">
+      <button type="button" class="ghost" id="leave-btn">Esci</button>
+      <div class="grow">
+        <h2 id="chat-title"></h2>
+        <small id="chat-sub"></small>
+      </div>
+      <label class="switch" title="Group ON: chiunque può entrare e leggere. Group OFF: chat privata 1 a 1.">
+        <input type="checkbox" id="group-switch">
+        <span class="track"></span>
+        <span id="group-label">Group ON</span>
+      </label>
+    </div>
+    <ol id="log" aria-live="polite"></ol>
+    <form class="composer" id="send-form" autocomplete="off">
+      <input type="text" id="text" placeholder="Scrivi un messaggio" aria-label="Messaggio">
+      <button type="submit">Invia</button>
+    </form>
+  </section>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+</body>
+</html>
