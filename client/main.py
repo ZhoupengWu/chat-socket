@@ -21,6 +21,10 @@ def connectionTCP(message: str):
     client = __createSocket()
     client.connect((IP_ADDRESS, IP_ADDRESS_PORT))
     client.sendall(message.encode())
+    response = client.recv(2048)
+    client.close()
+
+    return response.decode()
 
 @app.route("/")
 def index():
