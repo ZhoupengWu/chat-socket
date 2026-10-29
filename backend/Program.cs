@@ -7,8 +7,6 @@ using System.Globalization;
 
 public class SynchronousSocketListener {
 
-    public static string data = null;
-
     public static void StartListening() {
         IPAddress ipAddress = IPAddress.Any;
         IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 5000);
@@ -26,7 +24,7 @@ public class SynchronousSocketListener {
                 Console.WriteLine("Waiting for a connection...");
                 Socket handler = listener.Accept();
                 ClientManager clientThread = new ClientManager(handler);
-                Thread t = new Thread(new ThreadStart(clientThread.doClient));
+                Thread t = new Thread(new ThreadStart(clientThread.DoClient));
                 t.Start();
             }
         }
@@ -41,6 +39,7 @@ public class SynchronousSocketListener {
 
     public static int Main(String[] args) {
         StartListening();
+
         return 0;
     }
 }
@@ -55,30 +54,23 @@ public class ClientManager {
         this.clientSocket = clientSocket;
     }
 
-    public void doClient() {
-        data = "";
+    public void DoClient() {
+        while (true) {
+            data = "";
 
-        do {
-            int bytesRec = clientSocket.Receive(bytes);
-            data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-        } while (data.IndexOf("$") == -1);
+            do {
+                int bytesRec = clientSocket.Receive(bytes);
+                data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
+            } while (!data.Contains("\n\n\n"));
 
-        data = data.Substring(0, data.IndexOf('$'));
-        Console.WriteLine("Kelvin ricevuti: {0}", data);
-        string response_data;
+            data = data[..data.IndexOf('\n')];
+            Console.WriteLine("Protocollo di messaggio: {0}", data);
 
-        if (float.TryParse(data, NumberStyles.Float, CultureInfo.InvariantCulture, out float kelvin)) {
-            float celsius = kelvin - 273.15f;
-            response_data = celsius.ToString("F2", CultureInfo.InvariantCulture) + '$';
+            byte[] msg = Encoding.ASCII.GetBytes("Test");
+            clientSocket.Send(msg);
+            clientSocket.Shutdown(SocketShutdown.Both);
+            clientSocket.Close();
+            data = "";
         }
-        else {
-            response_data = "Valore non valido$";
-        }
-        
-        byte[] msg = Encoding.ASCII.GetBytes(response_data);
-        clientSocket.Send(msg);
-        clientSocket.Shutdown(SocketShutdown.Both);
-        clientSocket.Close();
-        data = "";
     }
 }
