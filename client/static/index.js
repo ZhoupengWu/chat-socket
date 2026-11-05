@@ -1,34 +1,50 @@
-/*
-  Pagina di accesso: si inserisce solo il nome utente.
-  POST /api/connect {nick} -> {ok:true} | {ok:false, error}, poi si passa a /home.
-*/
-const form = document.getElementById("entry-form");
-const nick = document.getElementById("nick");
-const button = document.getElementById("enter-btn");
-const errorBox = document.getElementById("entry-error");
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const name = nick.value.trim();
-  if (!name) {
-    errorBox.textContent = "Scrivi un nome utente.";
-    return;
+// Invia un JSON in POST e ritorna la risposta già convertita in oggetto/array
+async function inviaJson(url, payload) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) {
+    throw new Error("Errore HTTP " + response.status);
   }
-  errorBox.textContent = "";
-  button.disabled = true;
-  button.textContent = "Connessione…";
+  return response.json();
+}
+
+// type "connessione" -> array di {chat_id, name, is_private}
+function connessione() {
+  return inviaJson("/api/connection", { type: "connessione" });
+}
+
+// type "crea" + name
+function creaChat(name) {
+  return inviaJson("/api/create", { type: "crea", name: name });
+}
+
+// type "messaggi" + content_message
+function inviaMessaggio(testo) {
+  return inviaJson("/api/message", { type: "messaggi", content_message: testo });
+}
+
+// type "chiusura"
+function chiudi() {
+  return inviaJson("/api/close", { type: "chiusura" });
+}
+
+const btn = document.getElementById("btn-continua");
+
+btn.addEventListener("click", async () => {
+  btn.disabled = true;
   try {
-    const res = await fetch("/api/connect", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nick: name }),
+    const chat = await connessione();
+    console.log(chat);
+
+    chat.forEach((c) => {
+      console.log(c.chat_id, c.name, c.is_private);
     });
-    const r = await res.json();
-    if (!r.ok) throw new Error(r.error || "Connessione al server rifiutata.");
-    window.location.href = "/home";
   } catch (err) {
-    errorBox.textContent = err.message;
-    button.disabled = false;
-    button.textContent = "Entra";
+    console.error("Errore nella fetch:", err);
+  } finally {
+    btn.disabled = false;
   }
 });

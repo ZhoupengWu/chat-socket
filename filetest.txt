@@ -1,0 +1,21 @@
+nome = type
+connessione, crea,  messaggi, chiusura
+
+se mando connessione--> crea connessione socket e manda lista delle chat disponibili se ci sono,
+
+se viene mandato crea--> viene creata la chat (manda il nome della chat)
+
+se viene mandato messaggi--> creo message (generale), che sarebbe l'intereazione tra i due client collegati al server (si tratta di una classica chat, niente di più niente di meno)
+
+se viene mandato chiusura--> close la connessione socket tra client e server  
+
+
+devo creare un json che contenga type, name, content_message
+
+connessione e chiusura su type
+
+crea su name
+
+messaggi su content_message
+
+create un api/message e un api/close

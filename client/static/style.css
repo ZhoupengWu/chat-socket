@@ -1,0 +1,22 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: system-ui, sans-serif;
+}
+
+button {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
