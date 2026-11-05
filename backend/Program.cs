@@ -2,8 +2,10 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Globalization;
+using System.Collections.Generic;
 
 public class SynchronousSocketListener {
 
@@ -63,8 +65,9 @@ public class ClientManager {
                 data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
             } while (!data.Contains("\n\n\n"));
 
-            data = data[..data.IndexOf('\n')];
+            data = data[..data.IndexOf("\n\n\n")];
             Console.WriteLine("Protocollo di messaggio: {0}", data);
+            Messaggio? messaggio = JsonSerializer.Deserialize<Messaggio>(data);
 
             byte[] msg = Encoding.ASCII.GetBytes("Test");
             clientSocket.Send(msg);
@@ -73,4 +76,22 @@ public class ClientManager {
             data = "";
         }
     }
+
+    private List<Chat> ShowListChat() {
+        
+    }
+}
+
+public class Messaggio {
+
+    private string type {get;}
+    private string name {get;}
+    private string content_message {get;}
+}
+
+public class Chat {
+
+    private string chat_id {get;}
+    private string name {get;}
+    private bool is_private {get;}
 }
