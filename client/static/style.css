@@ -1,22 +1,155 @@
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
 
 body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
   font-family: system-ui, sans-serif;
 }
 
-button {
-  padding: 0.8rem 2rem;
+/* display: flex/grid annullerebbe l'attributo hidden */
+[hidden] {
+  display: none !important;
+}
+
+h2 {
+  margin: 0;
   font-size: 1.1rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+input[type="text"] {
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  min-width: 0;
+}
+
+button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
 }
 
 button:disabled {
-  cursor: wait;
+  cursor: not-allowed;
   opacity: 0.6;
+}
+
+#errore {
+  margin: 0;
+  padding: 0.6rem 1rem;
+  border: 1px solid #c0392b;
+  border-radius: 6px;
+  color: #c0392b;
+}
+
+/* ---------- Login ---------- */
+
+#form-connessione {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ---------- Chat ---------- */
+
+#vista-chat {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 1rem;
+  width: min(900px, 95vw);
+  height: min(600px, 80vh);
+}
+
+aside,
+#pannello {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 0;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#lista-chat {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+#lista-chat button {
+  width: 100%;
+  text-align: left;
+}
+
+#lista-chat button.attiva {
+  font-weight: bold;
+  border-color: #2980b9;
+}
+
+#lista-chat .vuoto {
+  color: #777;
+}
+
+#form-crea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#messaggi {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+#messaggi li {
+  align-self: flex-start;
+  max-width: 80%;
+  padding: 0.4rem 0.7rem;
+  border-radius: 8px;
+  background: #eee;
+  color: #111;
+  overflow-wrap: anywhere;
+}
+
+#messaggi li.mio {
+  align-self: flex-end;
+  background: #d6eaf8;
+}
+
+#messaggi strong {
+  display: block;
+  font-size: 0.8rem;
+}
+
+#form-messaggio {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#form-messaggio input {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  #vista-chat {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
 }

@@ -3,11 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Connessione</title>
+<title>Chat</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <button id="btn-continua">Continua</button>
+  <p id="errore" role="alert" hidden></p>
+
+  <section id="vista-login">
+    <form id="form-connessione">
+      <input id="input-sender" type="text" placeholder="Il tuo nome" maxlength="30" required autofocus>
+      <button id="btn-continua" type="submit">Continua</button>
+    </form>
+  </section>
+
+  <section id="vista-chat" hidden>
+    <aside>
+      <h2>Chat</h2>
+      <ul id="lista-chat"></ul>
+
+      <form id="form-crea">
+        <input id="input-nome-chat" type="text" placeholder="Nuova chat" maxlength="30" required>
+        <label><input id="check-privata" type="checkbox"> Privata</label>
+        <button type="submit">Crea</button>
+      </form>
+
+      <button id="btn-esci" type="button">Esci</button>
+    </aside>
+
+    <div id="pannello">
+      <h2 id="titolo-chat">Scegli una chat</h2>
+      <ul id="messaggi"></ul>
+
+      <form id="form-messaggio">
+        <input id="input-messaggio" type="text" placeholder="Scrivi un messaggio" autocomplete="off" disabled>
+        <button id="btn-invia" type="submit" disabled>Invia</button>
+      </form>
+    </div>
+  </section>
 
   <script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
