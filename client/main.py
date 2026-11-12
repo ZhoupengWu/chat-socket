@@ -220,5 +220,6 @@ if __name__ == "__main__":
         host="127.0.0.1",
         port=FLASK_PORT,
         debug=False,
-        threaded=True
+        threaded=True,
+        use_reloader=False
     )
