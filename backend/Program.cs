@@ -264,7 +264,7 @@ public class ClientManager {
                     is_private = isPrivate
                 };
 
-                if (isPrivate) chat.members.Add(sender);
+                chat.members.Add(sender);
 
                 chats.Add(chat);
                 SalvaChat();
