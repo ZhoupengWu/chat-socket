@@ -238,6 +238,7 @@ public class ClientManager {
 
         if (errore != null) {
             InviaErrore(errore);
+
             return;
         }
 
@@ -346,7 +347,7 @@ public class ClientManager {
             if (chat.members.Contains(sender)) return null;
 
             if (chat.members.Count >= MaxPrivata) {
-                return "Chat privata: i due partecipanti ci sono gia'";
+                return "Chat privata: i due partecipanti ci sono già";
             }
 
             // Il primo che apre la chat diventa il secondo (e ultimo) partecipante
@@ -356,9 +357,11 @@ public class ClientManager {
             return null;
         }
 
-        if (chatAperta != chat && clients.Count(c => c.chatAperta == chat) >= MaxPubblica) {
-            return "Chat piena: ci sono gia' " + MaxPubblica + " client";
+        if (chat.members.Count >= MaxPubblica) {
+            return "Chat piena: ci sono già " + MaxPubblica + " client";
         }
+
+        chat.members.Add(sender);
 
         return null;
     }
